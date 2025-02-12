@@ -6,7 +6,12 @@ export function DownloadResume() {
   return (
     <div className="relative justify-center">
       <CoolMode>
-        <Button>Download Resume</Button>
+        <a
+          href="/Junior-backend-developer-resume-of-hammad-sadi.pdf"
+          download="Junior-backend-developer-resume-of-hammad-sadi.pdf"
+        >
+          <Button>Download Resume</Button>
+        </a>
       </CoolMode>
     </div>
   );

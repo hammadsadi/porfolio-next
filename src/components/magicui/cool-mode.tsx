@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { ReactNode, useEffect, useRef } from "react";
@@ -30,7 +31,7 @@ export interface CoolParticleOptions extends BaseParticleOptions {
 
 const getContainer = () => {
   const id = "_coolMode_effect";
-  let existingContainer = document.getElementById(id);
+  const existingContainer = document.getElementById(id);
 
   if (existingContainer) {
     return existingContainer;
@@ -40,7 +41,7 @@ const getContainer = () => {
   container.setAttribute("id", id);
   container.setAttribute(
     "style",
-    "overflow:hidden; position:fixed; height:100%; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:2147483647",
+    "overflow:hidden; position:fixed; height:100%; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:2147483647"
   );
 
   document.body.appendChild(container);
@@ -52,7 +53,7 @@ let instanceCounter = 0;
 
 const applyParticleEffect = (
   element: HTMLElement,
-  options?: CoolParticleOptions,
+  options?: CoolParticleOptions
 ): (() => void) => {
   instanceCounter++;
 
@@ -91,7 +92,7 @@ const applyParticleEffect = (
       circle.setAttributeNS(
         null,
         "fill",
-        `hsl(${Math.random() * 360}, 70%, 50%)`,
+        `hsl(${Math.random() * 360}, 70%, 50%)`
       );
 
       circleSVG.appendChild(circle);
@@ -144,7 +145,7 @@ const applyParticleEffect = (
           `top:${p.top}px`,
           `left:${p.left}px`,
           `transform:rotate(${p.spinVal}deg)`,
-        ].join(";"),
+        ].join(";")
       );
     });
   }
@@ -236,5 +237,5 @@ export const CoolMode: React.FC<CoolModeProps> = ({ children, options }) => {
     }
   }, [options]);
 
-  return React.cloneElement(children as React.ReactElement, { ref });
+  return React.cloneElement(children as any, { ref });
 };

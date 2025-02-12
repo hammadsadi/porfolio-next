@@ -1,64 +1,160 @@
-import React from "react";
+"use client";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import { AiOutlineBars } from "react-icons/ai";
+import { GrLogout } from "react-icons/gr";
 
-const Sidebar = () => {
+const Sidebar = ({}) => {
+  const [isActive, setActive] = useState(false);
+  const { data: userInfo } = useSession();
+  const pathName = usePathname();
+  console.log(pathName);
+  const handleToggle = () => {
+    setActive(!isActive);
+  };
   return (
-    <div className="flex fixed top-0 left-0 h-screen w-64 flex-col justify-between border-e bg-white">
-      <div className="px-4 py-6">
-        <span className="grid h-10 w-full font-bold place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-          Hammad Sadi
-        </span>
+    <>
+      {userInfo?.user ? (
+        <>
+          {/* Small Screen Navbar */}
+          <div className="bg-gray-100 dark:bg-[#18181a] text-gray-800 flex justify-between md:hidden z-[50] relative">
+            <div>
+              <div className="block cursor-pointer p-4 font-bold">
+                <div className="flex justify-center items-center cursor-pointer text-primary">
+                  {/* <IoIosBicycle className="md:text-4xl text-base font-bold" /> */}
+                  <Link
+                    href="/"
+                    className="md:text-2xl text-base font-bold font-orbitron uppercase"
+                  >
+                    Dashbaord
+                  </Link>
+                </div>
+              </div>
+            </div>
 
-        <ul className="mt-6 space-y-1">
-          <li>
-            <a
-              href="#"
-              className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
+            <button
+              onClick={handleToggle}
+              className="mobile-menu-button p-4 focus:outline-none dark:focus:bg-[#09090b] dark:text-white text-[#09090b] focus:text-[#09090b]"
             >
-              General
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              Billing
-            </a>
-          </li>
-
-          <li>
-            <a
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              Invoices
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <a
-          href="#"
-          className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
-        >
-          <img
-            alt=""
-            src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-            className="size-10 rounded-full object-cover"
-          />
-
-          <div>
-            <p className="text-xs">
-              <strong className="block font-medium">Eric Frusciante</strong>
-
-              <span> eric@frusciante.com </span>
-            </p>
+              <AiOutlineBars className="h-5 w-5" />
+            </button>
           </div>
-        </a>
-      </div>
-    </div>
+
+          {/* Sidebar */}
+          <div
+            className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-[#f4f4f5] dark:bg-[#18181a] w-[270px] space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
+              isActive && "-translate-x-full"
+            }  md:translate-x-0  transition duration-200 ease-in-out`}
+          >
+            <div>
+              <div>
+                <div className="w-full hidden bg-primary/10 shadow-md md:flex px-4 py-2 rounded-lg justify-center items-center  mx-auto">
+                  <div className="flex justify-center  items-center cursor-pointer text-primary">
+                    {/* <IoIosBicycle className="md:text-4xl text-base font-bold" /> */}
+                    <Link
+                      href="/"
+                      className="md:text-2xl text-base font-bold font-orbitron uppercase"
+                    >
+                      Dashbaord
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* Nav Items */}
+              <div className="flex flex-col justify-between flex-1 mt-6">
+                {/* Conditional toggle button here.. */}
+
+                {/*  Menu Items */}
+
+                <nav>
+                  <div>
+                    <Link
+                      href="/dashboard/blogs"
+                      className={`flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  dark:hover:bg-primary/10 hover:bg-[#09090b] hover:text-white  ${
+                        pathName === "/dashboard/blogs"
+                          ? "dark:bg-primary/10 bg-[#09090b] text-white"
+                          : ""
+                      }`}
+                    >
+                      {/* <MdShoppingCartCheckout className="w-5 h-5" /> */}
+
+                      <span className="mx-4 font-medium">Blog Management</span>
+                    </Link>
+                    <Link
+                      href="/dashboard/projects"
+                      className={`flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  dark:hover:bg-primary/10 hover:bg-[#09090b] hover:text-white  ${
+                        pathName === "/dashboard/projects"
+                          ? "dark:bg-primary/10 bg-[#09090b] text-white"
+                          : ""
+                      }`}
+                    >
+                      {/* <MdShoppingCartCheckout className="w-5 h-5" /> */}
+
+                      <span className="mx-4 font-medium">
+                        Project Management
+                      </span>
+                    </Link>
+                    <Link
+                      href="/dashboard/messages"
+                      className={`flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  dark:hover:bg-primary/10 hover:bg-[#09090b] hover:text-white  ${
+                        pathName === "/dashboard/messages"
+                          ? "dark:bg-primary/10 bg-[#09090b] text-white"
+                          : ""
+                      }`}
+                    >
+                      {/* <MdShoppingCartCheckout className="w-5 h-5" /> */}
+
+                      <span className="mx-4 font-medium">
+                        Message Management
+                      </span>
+                    </Link>
+                  </div>
+                </nav>
+              </div>
+            </div>
+
+            <div>
+              <hr />
+
+              <Link
+                href="/dashboard/messages"
+                className={`flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  dark:hover:bg-primary/10 hover:bg-[#09090b] hover:text-white  ${
+                  pathName === "/dashboard/messagesss"
+                    ? "dark:bg-primary/10 bg-[#09090b] text-white"
+                    : ""
+                }`}
+              >
+                {/* <MdShoppingCartCheckout className="w-5 h-5" /> */}
+                <Image
+                  src={userInfo?.user?.image || ""}
+                  width={100}
+                  height={100}
+                  alt={userInfo?.user?.name || ""}
+                  className="w-8 h-8"
+                />
+
+                <span className="mx-4 font-medium">{userInfo?.user?.name}</span>
+              </Link>
+
+              <button
+                onClick={() => signOut()}
+                className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 bg-primary/10 hover:bg-primary dark:hover:bg-primary/10 dark:text-white hover:text-white transition-colors duration-300 transform"
+              >
+                <GrLogout className="w-5 h-5" />
+
+                <span className="mx-4 font-medium">Logout</span>
+              </button>
+            </div>
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+    </>
   );
 };
 

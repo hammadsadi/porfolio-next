@@ -1,6 +1,11 @@
 import ProjectPageCard from "@/components/portfolioCompnent/Projects/ProjectPageCard ";
+import { TProject } from "@/types/index.types";
 
-const ProjectPage = () => {
+const ProjectPage = async () => {
+  const res = await fetch(
+    "https://portfolio-api-opal.vercel.app/api/v1/project"
+  );
+  const project = await res.json();
   return (
     <section className="mt-10 md:mt-12">
       <div>
@@ -8,10 +13,9 @@ const ProjectPage = () => {
           projects
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center lg:grid-cols-3 gap-5 md:gap-5">
-          <ProjectPageCard />
-          <ProjectPageCard />
-          <ProjectPageCard />
-          <ProjectPageCard />
+          {project?.data?.map((project: TProject) => (
+            <ProjectPageCard key={project._id} project={project} />
+          ))}
         </div>
       </div>
     </section>

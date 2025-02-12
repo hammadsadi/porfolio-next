@@ -1,7 +1,12 @@
 import React from "react";
 import { ProjectCard } from "./ProjectCard";
+import { TProject } from "@/types/index.types";
 
-const Projects = () => {
+const Projects = async () => {
+  const res = await fetch(
+    "https://portfolio-api-opal.vercel.app/api/v1/project"
+  );
+  const project = await res.json();
   return (
     <section className="mt-10 md:mt-12">
       <div>
@@ -9,9 +14,9 @@ const Projects = () => {
           featured projects
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center lg:grid-cols-3 gap-5 md:gap-5">
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {project?.data?.slice(0, 4)?.map((item: TProject) => (
+            <ProjectCard key={item._id} project={item} />
+          ))}
         </div>
       </div>
     </section>
