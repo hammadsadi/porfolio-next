@@ -4,6 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 const DashboardPage = () => {
   const { data: session } = useSession();
+
   return (
     <>
       {session?.user ? (

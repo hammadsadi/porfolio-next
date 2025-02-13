@@ -1,6 +1,21 @@
 import Image from "next/image";
 import React from "react";
-
+// Dynamic Metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+   const { id } = await params;
+   const res = await fetch(
+     `https://portfolio-api-opal.vercel.app/api/v1/blog/${id}`
+   );
+   const blog = await res.json();
+  return {
+    title: blog?.data?.title,
+    description: blog?.data?.description
+  };
+}
 const BlogDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const res = await fetch(

@@ -2,7 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
-
+// Dynamic Metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+   const { id } = await params;
+   const res = await fetch(
+     `https://portfolio-api-opal.vercel.app/api/v1/project/${id}`
+   );
+   const project = await res.json();
+  return {
+    title: project?.data?.title,
+    description: project?.data?.description
+  };
+}
 const ProjectDetails = async ({
   params,
 }: {
