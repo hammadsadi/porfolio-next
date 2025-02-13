@@ -17,7 +17,7 @@ Click here for the Portfolio Live Site: [https://hammad-sadi-portfolio.vercel.ap
 - Next Js
 - Tailwind CSS
 - Typescript
-- Framer Motion"
+- Framer Motion
 
 
 ## 🛠️ Installation and Setup
